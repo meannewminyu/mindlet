@@ -11,8 +11,9 @@ create table if not exists public.memos (
 alter table public.memos enable row level security;
 
 revoke all on table public.memos from anon, authenticated;
-grant select, insert on table public.memos to anon;
-grant select, insert on table public.memos to authenticated;
+grant usage on schema public to anon, authenticated, service_role;
+grant select (id, title, content, created_at), insert on table public.memos to anon;
+grant select (id, title, content, created_at), insert on table public.memos to authenticated;
 grant select, insert, delete on table public.memos to service_role;
 
 drop policy if exists "Anyone can read memos" on public.memos;
